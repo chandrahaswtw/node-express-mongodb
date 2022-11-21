@@ -1,0 +1,14 @@
+* {
+  box-sizing: border-box;
+  font-family: "Roboto", sans-serif;
+}
+
+body {
+  margin: 0;
+  border: 0;
+}
+
+main {
+  margin-top: 50px;
+  padding: 0.5rem 1rem;
+}
