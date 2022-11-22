@@ -2,18 +2,13 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const app = express();
 const path = require("path");
-const sequelize = require("./utils/database");
+require("dotenv").config();
+const { makeConnection, getDB } = require("./utils/database");
 
 // Routes
-const adminRoutes = require("./routes/admin");
-const shopRoutes = require("./routes/shop");
-const errorRoute = require("./routes/error");
-
-// Models
-const { User } = require("./models/user");
-const { Product } = require("./models/products");
-const { Cart } = require("./models/cart");
-const { CartItem } = require("./models/cartItem");
+// const adminRoutes = require("./routes/admin");
+// const shopRoutes = require("./routes/shop");
+// const errorRoute = require("./routes/error");
 
 // Using body-parser
 app.use(
@@ -32,35 +27,24 @@ app.set("views", allViews);
 
 // Auth route
 app.use((req, res, next) => {
-  User.findByPk(1)
-    .then((user) => {
-      req.user = user;
-      next();
-    })
-    .catch((err) => console.log(err));
+  next();
 });
 
 // Using routes
-app.use(shopRoutes);
-app.use(adminRoutes);
-app.use(errorRoute);
-
-// Relations
-User.hasMany(Product);
-Product.belongsTo(User);
-User.hasOne(Cart);
-Cart.belongsTo(User);
-Cart.belongsToMany(Product, { through: CartItem });
-Product.belongsToMany(Cart, { through: CartItem });
+// app.use(shopRoutes);
+// app.use(adminRoutes);
+// app.use(errorRoute);
 
 // Start the server
-sequelize
-  .sync()
-  .then(async () => {
-    app.listen(2000, () => {
-      console.log("SERVER STARTED ON 2000");
-    });
-  })
-  .catch((e) => {
-    console.log("ERROR");
+makeConnection((error, db) => {
+  if (error) {
+    console.log("Error in connecting to DB ", error);
+    return;
+  }
+  if (db) {
+    console.log("Database connection successful");
+  }
+  app.listen(3000, () => {
+    console.log("App started on port 3000");
   });
+});
