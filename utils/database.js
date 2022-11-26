@@ -11,7 +11,7 @@ const makeConnection = async (callback) => {
   } else {
     try {
       await client.connect();
-      const db = await client.db("onlineStore");
+      db = await client.db("onlineStore");
       callback(null, db);
     } catch (e) {
       callback(e, null);

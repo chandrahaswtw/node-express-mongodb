@@ -1,7 +1,7 @@
 const { Product } = require("../models/products");
 
 const getProducts = async (req, res, next) => {
-  const rows = await req.user.getProducts();
+  const rows = await Product.getAllProducts();
   res.render("./shop/allProducts", {
     prod: rows,
     path: "/",
@@ -11,11 +11,11 @@ const getProducts = async (req, res, next) => {
 
 const viewProduct = async (req, res, next) => {
   const id = req.params.id;
-  const row = await Product.findByPk(id);
+  const productData = await Product.getProductById(id);
   res.render("./shop/viewProduct", {
-    prod: row,
+    prod: productData,
     path: "/",
-    docTitle: row.title,
+    docTitle: productData.title,
   });
 };
 

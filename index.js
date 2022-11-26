@@ -6,9 +6,9 @@ require("dotenv").config();
 const { makeConnection, getDB } = require("./utils/database");
 
 // Routes
-// const adminRoutes = require("./routes/admin");
-// const shopRoutes = require("./routes/shop");
-// const errorRoute = require("./routes/error");
+const adminRoutes = require("./routes/admin");
+const shopRoutes = require("./routes/shop");
+const errorRoute = require("./routes/error");
 
 // Using body-parser
 app.use(
@@ -31,9 +31,9 @@ app.use((req, res, next) => {
 });
 
 // Using routes
-// app.use(shopRoutes);
-// app.use(adminRoutes);
-// app.use(errorRoute);
+app.use(shopRoutes);
+app.use(adminRoutes);
+app.use(errorRoute);
 
 // Start the server
 makeConnection((error, db) => {
@@ -42,9 +42,9 @@ makeConnection((error, db) => {
     return;
   }
   if (db) {
-    console.log("Database connection successful");
+    console.log("DB connection successful");
+    app.listen(3000, () => {
+      console.log("App started on port 3000");
+    });
   }
-  app.listen(3000, () => {
-    console.log("App started on port 3000");
-  });
 });
