@@ -25,7 +25,6 @@ class User {
     const cart = user.cart;
     const productIds = cart.items.map((item) => item.productId);
     const desiredProducts = await Product.getFewProducts(productIds);
-    // console.log("desiredProducts", desiredProducts);
     const cartItems = desiredProducts.map((desiredProduct) => {
       const cartItem = {};
       cartItem.product = desiredProduct;
