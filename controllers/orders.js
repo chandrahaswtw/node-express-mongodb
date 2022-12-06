@@ -16,6 +16,7 @@ const getOrders = async (req, res, next) => {
     order.orderCost = orderCost;
     return order;
   });
+  console.log(JSON.stringify(orders));
   res.render("./shop/orders", {
     docTitle: "Orders",
     path: "/orders",

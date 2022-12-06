@@ -19,7 +19,7 @@
                 <div>
                   <img src="<%= item.prodDetails.imageUrl %>" alt="" class="order-image">
                 </div>
-                <p><%= item.prodDetails.title %></p>
+                <p> <a href="/viewProduct/<%= item.productId%>"><%= item.prodDetails.title %></a> </p>
                 <p>Qty: <%= item.quantity%></p>
               </div>
             <%}%>
