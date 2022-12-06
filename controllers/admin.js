@@ -11,7 +11,8 @@ const getAddProduct = (req, res, next) => {
 
 const postAddProduct = async (req, res, next) => {
   const { title, imageUrl, description, price } = req.body;
-  const prod = new Product(title, imageUrl, description, price);
+  const { _id: userId } = req.user;
+  const prod = new Product(title, imageUrl, description, price, userId);
   prod.saveProduct();
   return res.redirect("/");
 };
@@ -36,8 +37,10 @@ const getEditProduct = async (req, res, next) => {
 };
 
 const postEditProduct = async (req, res, next) => {
-  const { id: _id, title, imageUrl, description, price } = req.body;
-  await Product.updateProduct({ _id, title, imageUrl, description, price });
+  const { id, title, imageUrl, description, price } = req.body;
+  const { _id: userId } = req.user;
+  const prod = new Product(title, imageUrl, description, price, userId);
+  await prod.updateProductById(id);
   res.redirect("/");
 };
 

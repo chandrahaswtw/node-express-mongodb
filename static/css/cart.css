@@ -60,8 +60,7 @@
     justify-content: space-between;
 }
 
-hr {
-    height: 0.5px;
-    border: none;
-    background-color: #ccc;
+.placeOrdersButton{
+    margin-top: 0.5rem;
+    text-align: center;
 }

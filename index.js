@@ -4,11 +4,13 @@ const app = express();
 const path = require("path");
 require("dotenv").config();
 const { makeConnection, getDB } = require("./utils/database");
+const { User } = require("./models/user");
 
 // Routes
 const adminRoutes = require("./routes/admin");
 const shopRoutes = require("./routes/shop");
 const errorRoute = require("./routes/error");
+const ordersRoute = require("./routes/orders");
 
 // Using body-parser
 app.use(
@@ -27,12 +29,20 @@ app.set("views", allViews);
 
 // Auth route
 app.use((req, res, next) => {
-  next();
+  User.getUserById("638343ea1a765c6f7dca7db6")
+    .then((user) => {
+      req.user = user;
+      next();
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 });
 
 // Using routes
 app.use(shopRoutes);
 app.use(adminRoutes);
+app.use(ordersRoute);
 app.use(errorRoute);
 
 // Start the server
